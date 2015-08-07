@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Rockit MediaKeys
-// @namespace    https://github.com/gianlucaparadise/rockit-mediakeys/blob/master/rockit-mediakeys.js
+// @namespace    https://github.com/gianlucaparadise/rockit-mediakeys/blob/master/rockit-mediakeys.user.js
 // @version      0.1
 // @description  Rende compatibile MediaKeys (http://sway.fm) con il player nelle recensioni di Rockit.it
 // @author       Gianluca Paradiso
