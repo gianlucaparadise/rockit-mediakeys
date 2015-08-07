@@ -10,3 +10,7 @@ Funzioni supportate:
 - Previous
 
 Script testato solo con *Chrome* e *Tampermonkey*.
+
+Per installare Tampermonkey clicca [qui](https://tampermonkey.net/faq.php?ext=dhdg#Q100).
+<br>
+Per installare lo script in Tampermonkey clicca [qui](https://tampermonkey.net/faq.php?ext=dhdg#Q102).
