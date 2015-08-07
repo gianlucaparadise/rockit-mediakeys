@@ -11,6 +11,6 @@ Funzioni supportate:
 
 Script testato solo con *Chrome* e *Tampermonkey*.
 
-Per installare Tampermonkey clicca [qui](https://tampermonkey.net/faq.php?ext=dhdg#Q100).
+Per installare Tampermonkey clicca [qui](https://chrome.google.com/webstore/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo).
 <br>
-Per installare lo script in Tampermonkey clicca [qui](https://tampermonkey.net/faq.php?ext=dhdg#Q102).
+Per installare lo script in Tampermonkey clicca [qui](https://github.com/gianlucaparadise/rockit-mediakeys/raw/master/rockit-mediakeys.user.js).
