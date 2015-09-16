@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rockit MediaKeys
-// @namespace    https://github.com/gianlucaparadise/rockit-mediakeys/blob/master/rockit-mediakeys.user.js
-// @version      0.1
+// @namespace    https://github.com/gianlucaparadise/rockit-mediakeys/blob/master/rockit-mediakeys.js
+// @version      0.2
 // @description  Rende compatibile MediaKeys (http://sway.fm) con il player nelle recensioni di Rockit.it
 // @author       Gianluca Paradiso
 // @match        http://www.rockit.it/recensione/*
@@ -9,7 +9,50 @@
 // @require      https://s3.amazonaws.com/SwayFM/UnityShim.js
 // ==/UserScript==
 
-var enableLogging = true;
+var enableLogging = false;
+var enableNotifications = true;
+
+var imgSrc;
+
+function showNotification(theBody, theTitle, theIcon) {
+    var options = {
+        body: theBody,
+        icon: theIcon
+    }
+    
+    var n = new Notification(theTitle,options);
+    setTimeout(n.close.bind(n), 4000);
+}
+
+function notify(theBody, theTitle, theIcon) {
+    if (!enableNotifications) return;
+    
+    // Preso da MDN: https://developer.mozilla.org/en-US/docs/Web/API/notification#Example
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+        logg("This browser does not support desktop notification");
+        return;
+    }
+    
+    // Let's check whether notification permissions have already been granted
+    if (Notification.permission === "granted") {
+        // If it's okay let's create a notification
+        showNotification(theBody, theTitle, theIcon);
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+            // If the user accepts, let's create a notification
+            if (permission === "granted") {
+                showNotification(theBody, theTitle, theIcon);
+            }
+        });
+    }
+
+    // At last, if the user has denied notifications, and you 
+    // want to be respectful there is no need to bother them any more.
+}
 
 function logg(text) {
     if (enableLogging)
@@ -19,7 +62,14 @@ function logg(text) {
 }
 
 function play(track) {
+    var message = $(".title", track).text();
+    if (track.hasClass("playing")) message = "In pausa: " + message;
+    else if (track.hasClass("paused")) message = "In riproduzione: " + message;
+    
     $(".play a", track).click();
+    
+    logg(message);
+    notify(message, 'Rockit MediaKeys', imgSrc);
 }
 
 var unity = UnityMusicShim();
@@ -60,7 +110,7 @@ $(function() {
     var rockitPlayer = $(".elenco-brani.griglia");
     var track;
     
-    var imgSrc = $(".box-disco .box-img img")[0].src;
+    imgSrc = $(".box-disco .box-img img")[0].src;
     var artistName = $("a.nome-artista").eq(0).text();
     
     unity.setCallbackObject({
